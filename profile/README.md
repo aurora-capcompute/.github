@@ -58,18 +58,21 @@ you actually talk to:
                           │  HTTP /v1
                      aurora-dist                               ← the server (one binary you run)
                           │  assembled from…
-        ┌─────────────────┼──────────────────┐
-   aurora-capcompute   aurora-dispatchers   capcompute
-   (orchestration)     (capability drivers)  (the kernel)
-                          │
-                   aurora-brains                               ← the WASM agent "programs" that run inside
+        ┌─────────────────┴──────────────────┐
+   aurora-capcompute                aurora-dispatchers
+   (orchestration runtime)          (capability drivers)
+        └─────────────────┬──────────────────┘
+                          │  both built on
+                     capcompute                                ← the kernel (the foundation)
+
+   aurora-brains  ─▶  the WASM agent "programs" that run inside the kernel
 ```
 
 Read it bottom‑to‑top: **capcompute** is the kernel that sandboxes and records;
-**aurora-capcompute** turns it into a durable agent runtime; **aurora-dispatchers**
-and **aurora-brains** plug in the tools and the cognition; **aurora-dist** bundles it
-all into one server; and **aurora-cli** / **aurora-slack-connector** are how you drive
-it.
+**aurora-capcompute** (the orchestration runtime) and **aurora-dispatchers** (the
+capability drivers) are both **built on** it; **aurora-brains** supplies the agent
+programs that run inside; **aurora-dist** bundles it all into one server; and
+**aurora-cli** / **aurora-slack-connector** are how you drive it.
 
 ## The repositories
 
